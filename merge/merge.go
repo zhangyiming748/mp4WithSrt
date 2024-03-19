@@ -20,8 +20,8 @@ func Merge(dir, pattern string) {
 		srt := strings.Replace(file, ".mp4", ".srt", 1)
 		//ass := strings.Replace(file.FullPath, ".mp4", ".ass", 1)
 		if isExist(srt) {
-			output := strings.Replace(file, ".mp4", "_with_subtitle.mp4", 1)
-			output = strings.Replace(file, ".mp4", "_with_subtitle.mkv", 1)
+			// output := strings.Replace(file, ".mp4", "_with_subtitle.mp4", 1)
+			output := strings.Replace(file, ".mp4", "_with_subtitle.mkv", 1)
 			//cmd := exec.Command("ffmpeg", "-i", file.FullPath, "-f", "srt", "-i", srt, "-c:v", "libx265", "-c:a", "aac", "-ac", "1", "-tag:v", "hvc1", "-c:s", "mov_text", output)
 			// ffmpeg -i input.mkv -i input.ass -c copy -c:s ass output.mkv
 			cmd := exec.Command("ffmpeg", "-i", file, "-i", srt, "-c:v", "libx265", "-c:a", "aac", "-ac", "1", "-tag:v", "hvc1", "-c:s", "ass", output)
@@ -32,6 +32,7 @@ func Merge(dir, pattern string) {
 				continue
 			} else {
 				fmt.Printf("命令成功执行: %s\n", string(combinedOutput))
+				os.Remove(file)
 			}
 		}
 	}
